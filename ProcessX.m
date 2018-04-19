@@ -1,19 +1,12 @@
-function cord = ProcessX( imgXProc )
-    figure(2);imshow(imgXProc);impixelinfo;
-    cc = bwconncomp(imgXProc);
+function cord = ProcessX( img )
+    cc = bwconncomp(img);
     stats = regionprops(cc);
-    threshold = 50;
-    removeMask = [stats.Area]>threshold;
-    imgXProc(cat(1,cc.PixelIdxList{removeMask})) = 0;
-    
-    cc = bwconncomp(imgXProc);
-    stats = regionprops(cc);
-    threshold = 4;
+    threshold = 5;
     removeMask = [stats.Area]<threshold;
-    imgXProc(cat(1,cc.PixelIdxList{removeMask})) = 0;
+    img(cat(1,cc.PixelIdxList{removeMask})) = 0;
     
-    figure(3);imshow(imgXProc);impixelinfo;
-    
+    cc = bwconncomp(img);
+    stats = regionprops(cc);
     cord = stats.Centroid;
 end
 
