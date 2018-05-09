@@ -7,27 +7,15 @@ yCentroid = [];
 zCentroid = [];
 
 %Obtener numero de frames del video
-
-% for DEBUG ONLY
-nFrames = 1146;
 init = 1;
-
-% init = 1;
-% nFrames = get(video, 'NumberOfFrames');
+nFrames = get(video, 'NumberOfFrames');
 
 % Recorrer frame a frame
-for i=init:500
+for i=init:nFrames
     % Obtener framedel video
     frame=read(video,i);
+        
     
-    % Extraer componente X de la imagen
-%     imgX=frame(51:171,220:339,:);
-%     imgXProc = processBinImg(imgX);
-%     imgXProc = imclearborder(imgXProc);
-%     figure(2);imshow(imgXProc);impixelinfo;
-%     imgXProc = morphology(imgXProc,1);
-%     figure(3);imshow(imgXProc);impixelinfo;
-
     % Extraer componente Y de la imagen
     imgY=frame(277:460,188:365,:);
     % Generar imagen binaria de la imagen
@@ -54,6 +42,18 @@ for i=init:500
     imgZProc = morphology(imgZProc,1);
     % borrar ruido de la imagen
     imgZProc = removeDots(imgZProc);
+    
+    
+    
+    %%% COMPONENTE X NO FUNCIONAL AUN %%%
+     % Extraer componente X de la imagen
+     %imgX=frame(51:171,220:339,:);
+     %imgXProc = processBinImg(imgX);
+     %imgXProc = imclearborder(imgXProc);
+     %figure(2);imshow(imgXProc);impixelinfo;
+     %imgXProc = morphology(imgXProc,1);
+     %figure(3);imshow(imgXProc);impixelinfo;
+    %%% COMPONENTE X NO FUNCIONAL AUN %%%
     
     
     % REFERENCE https://la.mathworks.com/matlabcentral/answers/167108-how-can-i-remove-object-bigger-than-x-pixel
