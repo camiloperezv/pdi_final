@@ -1,9 +1,12 @@
 clear all, close all, clc
 video = VideoReader('files/video.wmv');
 
+% Declaracion de arreglos que contendran los centroides de la pulga
 xCentroid = [];
 yCentroid = [];
 zCentroid = [];
+
+%Obtener numero de frames del video
 
 % for DEBUG ONLY
 nFrames = 1146;
@@ -11,39 +14,45 @@ init = 1;
 
 % init = 1;
 % nFrames = get(video, 'NumberOfFrames');
-for i=init:500
 
+% Recorrer frame a frame
+for i=init:500
+    % Obtener framedel video
     frame=read(video,i);
-    %frameN=read(video,i+1);
+    
+    % Extraer componente X de la imagen
 %     imgX=frame(51:171,220:339,:);
-%     figure(1);imshow(imgX);impixelinfo;
 %     imgXProc = processBinImg(imgX);
 %     imgXProc = imclearborder(imgXProc);
 %     figure(2);imshow(imgXProc);impixelinfo;
 %     imgXProc = morphology(imgXProc,1);
 %     figure(3);imshow(imgXProc);impixelinfo;
 
-    
+    % Extraer componente Y de la imagen
     imgY=frame(277:460,188:365,:);
+    % Generar imagen binaria de la imagen
     imgYProc = processBinImg(imgY);
-%     figure(2);imshow(imgYProc);impixelinfo;
+    % Usar metodo de distancias si existen centroides
     if(size(yCentroid,1)>0)
         imgYProc = removeFarData(imgYProc,yCentroid(end,:));
     end
-%     figure(3);imshow(imgYProc);impixelinfo;
+    % HAcer una apertura a la imagen con forma de disco de tamaño 1
     imgYProc = morphology(imgYProc,1);
-     
+    % borrar ruido de la imagen
     imgYProc = removeDots(imgYProc);
-%     figure(5);imshow(imgYProc);impixelinfo;
 
 
-
+    % Extraer componente Y de la imagen
     imgZ=frame(277:460,397:538,:);
+    % Generar imagen binaria de la imagen
     imgZProc = processBinImg(imgZ);
+    % Usar metodo de distancias si existen centroides
     if(size(zCentroid,1)>0)
         imgZProc = removeFarData(imgZProc,zCentroid(end,:));
     end
+    % HAcer una apertura a la imagen con forma de disco de tamaño 1
     imgZProc = morphology(imgZProc,1);
+    % borrar ruido de la imagen
     imgZProc = removeDots(imgZProc);
     
     
@@ -55,22 +64,24 @@ for i=init:500
     %      i
 
 
-    %%% PROCESS Y %%%
+    %%% PROCESS Y Encontrar centroide y agregarlo al arreglo de centroides %%%
     yCentroid = [yCentroid;ProcessY( imgYProc )];
     %%% PROCESS Y %%%
 
 
-    %%% PROCESS Z %%%
+    %%% PROCESS Z Encontrar centroide y agregarlo al arreglo de centroides %%%
     zCentroid = [zCentroid;ProcessZ( imgZProc )];
     %%% PROCESS Z %%%
     
    
 end
+% Extraer la componente de interez de cada arreglo de centroides para hacer
+% la grafica tridimencional
+
 %xComponent = xCentroid(:,1);
 yComponent = yCentroid(:,1);
 zComponent = zCentroid(:,1);
-% xComponent = yComponent;
-% 
+ 
 % plot3(xComponent,yComponent,zComponent)
 %figure(1)
 
