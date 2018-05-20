@@ -1,4 +1,4 @@
-function cord = ProcessX( img )
+function cord = ProcessX( img, lastCord )
     %Obtener regiones conectadas y estadisticas de las regiones
     cc = bwconncomp(img);
     stats = regionprops(cc);
@@ -9,6 +9,11 @@ function cord = ProcessX( img )
     % de la nueva imagen se extrae el centroide a retornar
     cc = bwconncomp(img);
     stats = regionprops(cc);
-    cord = stats.Centroid;
+    if(~isempty(stats) )
+        cord = stats.Centroid;
+    else
+        cord = lastCord;
+    end
+    
 end
 

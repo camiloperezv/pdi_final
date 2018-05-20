@@ -1,4 +1,4 @@
-function cord = ProcessZ( img )
+function cord = ProcessZ( img, lastCord )
     % Obtener regiones conectadas y estadisticas de las regiones
     cc = bwconncomp(img);
     stats = regionprops(cc);
@@ -12,7 +12,7 @@ function cord = ProcessZ( img )
     if(~isempty(stats) )
         cord = stats.Centroid;
     else
-        cord = [0,0];
+        cord = lastCord;
     end
     
 end

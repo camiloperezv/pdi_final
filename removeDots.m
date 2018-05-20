@@ -14,19 +14,19 @@ function img = removeDots( imgYProc, lastChord )
     % asumira que es la pulga
     for object = 1:length(stats)
         if(stats(object).Area > mayor)
-            if exist('lastChord','var')
-                matDist = [lastChord;stats(object).Centroid];
-                d = pdist(matDist,'euclidean');
+            %if exist('lastChord','var')
+                %matDist = [lastChord;stats(object).Centroid];
+                %d = pdist(matDist,'euclidean');
                 % antes de llamar esta funcion se debe invocar
                 % removeFarDots para que no tenga que entrar a este if,
                 % pues todos los puntos lejanos ya habran sido borrados
-                if(d>9)
+                %if(d>9)
                     % Debido a que el centroide esta a mas de 9 del
                     % este elemento no se debe tener en cuenta como
                     % elemento a cambiar
-                    continue;
-                end
-            end
+                %    continue;
+                %end
+            %end
             % Se asigna el numero como elemento mayor
             mayor = stats(object).Area;
         end
